@@ -79,13 +79,18 @@
     var eleConsole = document.getElementById('console');
 
     var inputEventHandler = function(e){
-        print(e.type +'| input 事件没有 value 字段，但可用从 target 或 currentTarget中获取完整内容');
+        print(e.type +' | input 事件没有 data 字段，但可用从 target 或 currentTarget中获取完整内容');
         console.log(e);
     };
 
     var compositionEventHandler = function(e){
 
-        print(e.type +'|'+ e.value);
+        if (e.type === 'compositionupdate') {
+          print(e.type +' | '+ e.data);
+        } else {
+          print(e.type +' | '+ e.type + '事件没有 data 字段，但可用从 target 或 currentTarget中获取完整内容');
+        }
+
         console.log(e);
     };
 
