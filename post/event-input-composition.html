@@ -78,14 +78,14 @@
     var eleDiv = document.getElementById('demo-2');
     var eleConsole = document.getElementById('console');
 
-    var eventHandler = function(e){
-        print(e.data +'|'+ e.type);
+    var inputEventHandler = function(e){
+        print(e.type +'| input 事件没有 value 字段，但可用从 target 或 currentTarget中获取完整内容'+);
         console.log(e);
     };
 
     var compositionEventHandler = function(e){
 
-        print(e.data +'|'+ e.type);
+        print(e.type +'|'+ e.value);
         console.log(e);
     };
 
@@ -95,7 +95,7 @@
         eleConsole.appendChild(p);
     };
 
-    eleInput.addEventListener('input', eventHandler, false);
+    eleInput.addEventListener('input', inputEventHandler, false);
     eleInput.addEventListener('compositionstart', compositionEventHandler, false);
     eleInput.addEventListener('compositionupdate', compositionEventHandler, false);
     eleInput.addEventListener('compositionend', compositionEventHandler, false);
