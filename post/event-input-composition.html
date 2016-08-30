@@ -18,6 +18,10 @@
             color: #fff;
         }
 
+        .console p{
+          margin: 0.5em;
+        }
+
     </style>
 </head>
 <body>
@@ -75,6 +79,7 @@
     var eleConsole = document.getElementById('console');
 
     var eventHandler = function(e){
+        print(e.data +'|'+ e.type);
         console.log(e);
     };
 
