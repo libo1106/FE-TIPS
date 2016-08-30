@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>input 事件DEMO</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+
+        .input{
+            border: 1px solid red;
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+
+        .console{
+            background-color: #000;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+<section class="doc">
+
+    <h2>https://www.w3.org/TR/uievents</h2>
+
+    <h3>普通输入</h3>
+
+    <p>监听 input 事件即可</p>
+
+    <h3>输入法</h3>
+
+    <p>有一组 composition 事件, 用于检测输入法状态</p>
+
+    <p>开启输入法 compositionstart</p>
+    <p>使用输入法在进行输入 compositionupdate</p>
+    <p>关闭输入法 compositionupend</p>
+
+</section>
+
+<section class="demo">
+
+    <h2>input 元素测试</h2>
+
+    <div class="wrap">
+        <input type="text" class="input" id="demo-1">
+    </div>
+
+</section>
+
+<section class="demo">
+
+    <h2>contenteditable 元素测试</h2>
+
+    <div class="wrap">
+
+        <div class="input" contenteditable="true" id="demo-2"></div>
+
+    </div>
+
+</section>
+
+<section class="console">
+
+    <div class="main" id="console"></div>
+
+</section>
+
+<script>
+
+    var eleInput = document.getElementById('demo-1');
+    var eleDiv = document.getElementById('demo-2');
+    var eleConsole = document.getElementById('console');
+
+    var eventHandler = function(e){
+        console.log(e);
+    };
+
+    var compositionEventHandler = function(e){
+
+        print(e.data +'|'+ e.type);
+        console.log(e);
+    };
+
+    var print = function(string){
+        var p = document.createElement('p');
+        p.innerHTML = string;
+        eleConsole.appendChild(p);
+    };
+
+    eleInput.addEventListener('input', eventHandler, false);
+    eleInput.addEventListener('compositionstart', compositionEventHandler, false);
+    eleInput.addEventListener('compositionupdate', compositionEventHandler, false);
+    eleInput.addEventListener('compositionend', compositionEventHandler, false);
+
+
+</script>
+</body>
+</html>
