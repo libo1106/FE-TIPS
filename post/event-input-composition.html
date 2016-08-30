@@ -6,21 +6,34 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <style>
 
-        .input{
-            border: 1px solid red;
-            display: block;
-            width: 100%;
-            margin: 0;
-        }
+    html,
+    body{
+      margin: 0;
+      padding: 0;
+    }
 
-        .console{
-            background-color: #000;
-            color: #fff;
-        }
+    .doc,
+    .demo,
+    .console{
+      margin: 10px;
+    }
 
-        .console p{
-          margin: 0.5em;
-        }
+    .input{
+        border: 1px solid red;
+        display: block;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .console{
+        background-color: #000;
+        color: #fff;
+    }
+
+    .console p{
+      margin: 0.5em;
+    }
 
     </style>
 </head>
@@ -28,7 +41,7 @@
 
 <section class="doc">
 
-    <h2>https://www.w3.org/TR/uievents</h2>
+    <h2></h2>
 
     <h3>普通输入</h3>
 
@@ -41,6 +54,10 @@
     <p>开启输入法 compositionstart</p>
     <p>使用输入法在进行输入 compositionupdate</p>
     <p>关闭输入法 compositionupend</p>
+
+    <h3>参考文档</h3>
+
+    <p><a href="https://www.w3.org/TR/uievents" target="_blank">https://www.w3.org/TR/uievents</a></p>
 
 </section>
 
@@ -105,6 +122,10 @@
     eleInput.addEventListener('compositionupdate', compositionEventHandler, false);
     eleInput.addEventListener('compositionend', compositionEventHandler, false);
 
+    eleDiv.addEventListener('input', inputEventHandler, false);
+    eleDiv.addEventListener('compositionstart', compositionEventHandler, false);
+    eleDiv.addEventListener('compositionupdate', compositionEventHandler, false);
+    eleDiv.addEventListener('compositionend', compositionEventHandler, false);
 
 </script>
 </body>
