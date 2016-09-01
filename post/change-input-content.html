@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, noarchive, nofollow">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>动态改变输入内容</title>
+  <style>
+
+  html,
+  body{
+    margin: 0;
+    padding: 0;
+  }
+
+  .doc,
+  .demo{
+    margin: 10px;
+  }
+
+  .input{
+      border: 1px solid red;
+      display: block;
+      width: 100%;
+      margin: 0;
+      box-sizing: border-box;
+  }
+
+  .item{
+    border: 1px solid blue;
+  }
+
+  </style>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83558327-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+
+<section class="demo">
+
+    <h2>contenteditable 元素测试</h2>
+
+    <div class="wrap">
+
+        <div class="input" contenteditable="true" id="demo"></div>
+
+    </div>
+
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script>
+var $demo = $('#demo');
+var isComposition = false;
+
+var createSpan = function(innerHTML){
+  var span = document.createElement('span');
+  span.className = 'item';
+  span.innerHTML = innerHTML;
+  span.title = '可交互元素';
+  return span;
+}
+
+var process = _.debounce(function(){
+
+  if (isComposition) {
+    return;
+  }
+
+  var $texts = $demo.contents().filter(function(){
+    return this.nodeType === 3;
+  });
+
+  var $spans = $demo.contents().filter(function(){
+    return this.className === 'item';
+  })
+
+  // 拆分文本中的__
+  $texts.each(function(i, textNode){
+
+    var str = textNode.data;
+
+    var pattern = /([^_]*)([_]{2,})([^_]*)/g;
+    var df = document.createDocumentFragment();
+
+    while ((res = pattern.exec(str)) !== null ){
+
+      if (res[1]) df.appendChild(document.createTextNode(res[1]));
+      if (res[2]) df.appendChild(createSpan(res[2]));
+      if (res[3]) df.appendChild(document.createTextNode(res[3]));
+
+    }
+
+    // 最小范围替换
+    if (df.children.length > 0) {
+      $texts[i].replaceWith(df);
+    }
+
+  });
+
+  // 拆分__中的文本
+  $spans.each(function(i, spanNode){
+    var str = spanNode.innerHTML;
+    var pattern = /([^_]*)([_]{2,})([^_]*)/g;
+    var df = document.createDocumentFragment();
+
+    while ((res = pattern.exec(str)) !== null) {
+
+      if (res[1]) df.appendChild(document.createTextNode(res[1]));
+      if (res[2]) df.appendChild(createSpan(res[2]));
+      if (res[3]) df.appendChild(document.createTextNode(res[3]));
+
+    }
+
+    if (df.children.length > 0){
+      $spans[i].replaceWith(df);
+    }
+  });
+
+}, 800);
+
+$demo.on('input', process)
+    .on('compositionstart', function(){
+        isComposition = true;
+      })
+      .on('compositionend', function(){
+          isComposition = false;
+      });
+</script>
+</body>
+</html>
