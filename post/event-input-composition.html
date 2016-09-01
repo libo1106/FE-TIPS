@@ -35,6 +35,10 @@
       margin: 0.5em;
     }
 
+    .item{
+      border: 1px solid blue;
+    }
+
     </style>
 </head>
 <body>
@@ -58,6 +62,10 @@
     <h3>参考文档</h3>
 
     <p><a href="https://www.w3.org/TR/uievents" target="_blank">https://www.w3.org/TR/uievents</a></p>
+
+    <h3>使用场景</h3>
+
+    <p>对特殊输入内容，进行转换</p>
 
 </section>
 
@@ -83,12 +91,24 @@
 
 </section>
 
+<section class="demo">
+
+  <h2>实际使用场景，当遇到连续2个以上的 a 字符的时候，这组连续字符将变成可交互元素</h2>
+
+  <div class="wrap">
+
+    <div class="input" contenteditable="true" id="demo-3"></div>
+
+  </div>
+
+</section>
+
 <section class="console">
 
     <div class="main" id="console"></div>
 
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script>
 
     var eleInput = document.getElementById('demo-1');
@@ -123,9 +143,32 @@
     eleInput.addEventListener('compositionend', compositionEventHandler, false);
 
     eleDiv.addEventListener('input', inputEventHandler, false);
+
     eleDiv.addEventListener('compositionstart', compositionEventHandler, false);
     eleDiv.addEventListener('compositionupdate', compositionEventHandler, false);
     eleDiv.addEventListener('compositionend', compositionEventHandler, false);
+
+
+
+    var demo3 = document.getElementById('demo-3');
+    var isComposition = false;
+    var process = _.debounce(function(){
+
+      if (isComposition) {
+        return;
+      }
+
+      this.innerHTML = this.innerHTML.replace(/<span class="item" title="可交互元素">(.*?)<\/span>/g,'$1')
+                                     .replace(/([a]{2,})/g, '<span class="item" title="可交互元素">$1</span>');
+    }, 300);
+
+    demo3.addEventListener('input', process);
+    demo3.addEventListener('compositionstart', function(){
+      isComposition = true;
+    })
+    demo3.addEventListener('compositionend', function(){
+      isComposition = false;
+    });
 
 </script>
 </body>
