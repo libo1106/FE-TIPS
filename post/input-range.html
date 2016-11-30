@@ -102,13 +102,32 @@
       content: attr(max);
     }
 
+    table{
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #333;
+      text-align: center;
+    }
+
     </style>
 </head>
 <body>
 
   <article>
-
     <h1>input type=range 测试</h1>
+  </article>
+
+  <div class="container">
+
+      <input class="ui-range" type="range" min="1" max="100">
+
+  </div>
+
+  <article>
 
     <p>type=range 仅仅兼容 IE10+, 低版本 IE 表现为一个普通 input 输入框</p>
     <p>::-ms-fill-lower和::-ms-fill-upper仅限于 IE10+, 用来实现模仿进度条效果</p>
@@ -116,13 +135,33 @@
     <p>type=range 的定制样式高级浏览器的定制写法生成器 <a href="http://www.cssportal.com/style-input-range/" target="_blank">http://www.cssportal.com/style-input-range/</a></p>
     <p>jQueryUI 采用完全 div 模拟的方式</p>
 
+    <h2>现有库</h2>
+
+    <table>
+
+      <tr>
+        <th>第三方库</th>
+        <th>优点</th>
+        <th>缺点</th>
+      </tr>
+
+      <tr>
+        <td><a href="http://jqueryui.com/slider/" target="_blank">jQueryUI</a></td>
+        <td>兼容低版本 IE</td>
+        <td>没有做 touch 事件兼容</td>
+      </tr>
+
+      <tr>
+        <td><a href="http://rangeslider.js.org/" target="_blank">rangeslider.js</a></td>
+        <td>支持进度展示，支持触摸交互</td>
+        <td>iPhone10 微信客户端直接无法操作官网 demo</td>
+      </tr>
+
+    </table>
+
   </article>
 
-    <div class="container">
 
-        <input class="ui-range" type="range" min="1" max="100">
-
-    </div>
 
 </body>
 </html>
