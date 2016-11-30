@@ -33,7 +33,7 @@
         background: #FFFFFF;
         cursor: pointer;
         -webkit-appearance: none;
-        margin-top: -11px;
+        margin-top: -8px;
     }
     input[type=range]:focus::-webkit-slider-runnable-track {
         background: #5397E7;
@@ -94,13 +94,33 @@
         background: #5397E7;
     }
 
+    .ui-range::before {
+      content: attr(min);
+    }
+
+    .ui-range::after {
+      content: attr(max);
+    }
+
     </style>
 </head>
 <body>
 
+  <article>
+
+    <h1>input type=range 测试</h1>
+
+    <p>type=range 仅仅兼容 IE10+, 低版本 IE 表现为一个普通 input 输入框</p>
+    <p>::-ms-fill-lower和::-ms-fill-upper仅限于 IE10+, 用来实现模仿进度条效果</p>
+    <p><img src="http://brennaobrien.com/assets/blog/custom-slider-ie-updated.png"></p>
+    <p>type=range 的定制样式高级浏览器的定制写法生成器 <a href="http://www.cssportal.com/style-input-range/" target="_blank">http://www.cssportal.com/style-input-range/</a></p>
+    <p>jQueryUI 采用完全 div 模拟的方式</p>
+
+  </article>
+
     <div class="container">
 
-        <input type="range" min="1" max="100">
+        <input class="ui-range" type="range" min="1" max="100">
 
     </div>
 
